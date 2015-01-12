@@ -9,16 +9,13 @@ parser.add_argument('--token_file',
                     type=str,
                     help='Filename that contains the API token')
 
-#parser.add_argument('--group_id',
-#                    type=int,
-#                    help='ID of the group')
+parser.add_argument('--group_id',
+                    type=str,
+                    help='Group ID to retrieve')
 
 args = parser.parse_args()
 
 api = groupme.APIv3(token_file = args.token_file)
-data = api.get_groups()
+data = api.get_group(args.group_id)
 
-print("{} TOTAL GROUPS".format(len(data)))
-
-for entry in data:
-    print(entry['id'] + ': ' + entry['name'])
+print(data)

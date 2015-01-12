@@ -3,25 +3,32 @@
 import pprint
 import groupme
 from datetime import datetime
+import argparse
 
-token = '7d1fc460f507013114b94e6a4037cf04'
-#group_id = '9173535'
-group_id='4002754' # xfaction
+# Currently this script just lists active users but is an example of getting message history and doing something with it
 
-api = groupme.APIv3(token)
-count = api.get_message_count(group_id=group_id)
-messages = api.get_messages(group_id=group_id, per_page=40, maximum=40, since_id=21103666)
+parser = argparse.ArgumentParser(description = 'Get message history for a group')
 
-#print("{} TOTAL MESSAGES".format(message_count))
+parser.add_argument('--token_file',
+                    type=str,
+                    help='Filename that contains the API token')
+
+parser.add_argument('--group_id',
+                    type=int,
+                    help='ID of the group')
+
+args = parser.parse_args()
+
+api = groupme.APIv3(token_file=args.token_file)
+count = api.get_message_count(group_id=args.group_id)
+messages = api.get_messages(group_id=args.group_id, per_page=40, maximum=40)
+
 print("Got {} messages of {} total".format(len(messages), count))
 
 users = {}
 
 pp = pprint.PrettyPrinter(indent=2)
 
-#sender_id
-#name
-#created_at
 for message in messages:
     sender_id = message['sender_id']
     username = message['name']
