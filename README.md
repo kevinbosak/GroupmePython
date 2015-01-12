@@ -1,4 +1,4 @@
 GroupmePython
 =============
 
-Python library for the GroupMe API
+Python 3 library for the GroupMe API
