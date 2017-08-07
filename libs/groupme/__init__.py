@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from urllib import urlencode
+from urllib.parse import urlencode
 #import urllib.request
 #import urllib.parse
 import requests
