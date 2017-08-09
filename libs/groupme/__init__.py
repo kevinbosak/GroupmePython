@@ -33,9 +33,9 @@ class APIv3(object):
 #            response = urllib.request.urlopen(url)
         else:
             url = url + '?' + urlencode({'token': self.token})
-#            body = json.dumps(kwargs).encode('utf-8')
-#            body = urllib.parse.urlencode(kwargs).encode('utf-8')
-            response = requests.post( url, params=kwargs )
+            body = json.dumps(kwargs)
+            response = requests.post( url, data=body,
+                    headers={'content-type': 'application/json'})
 
         # TODO: check response.status?
         response_data = {}
@@ -94,6 +94,12 @@ class APIv3(object):
         if response_data['response_code'] == 200:
             return True
         return False
+
+    def bot_create_message(self, bot_id, group_id, message):
+        url = _BASE_URL + '/bots/post'
+        message_params = {'bot_id': bot_id, 'text': message}
+
+        response_data = self._make_call(url = url, method = 'POST', **message_params)
 
     # TODO: support attachments
     def create_message(self, group_id, message):
